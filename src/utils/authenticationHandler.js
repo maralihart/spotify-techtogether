@@ -1,11 +1,15 @@
 import {authorize, refresh} from 'react-native-app-auth';
+import {spotifyCredentials} from './secrets.js';
+import {AuthSession} from 'expo';
+
+
 
 class AuthenticationHandler {
   constructor() {
     this.spotifyAuthConfig = {
-      clientId: process.env.SPOTIFYAPIKEY,
-      clientSecret: process.env.SPOTIFYAPISECRET,
-      redirectUrl: 'Spotify-First://oauthredirect',
+      clientId: spotifyCredentials.clientId,
+      clientSecret: spotifyCredentials.clientSecret,
+      redirectUrl: spotifyCredentials.redirectUrl,
       scopes: [
         'playlist-read-private',
         'playlist-modify-public',
@@ -23,11 +27,11 @@ class AuthenticationHandler {
 
   async onLogin() {
     try {
+      console.log(this.spotifyAuthConfig);
       const result = await authorize(this.spotifyAuthConfig);
-      alert(JSON.stringify(result));
       return result;
     } catch (error) {
-      console.log(JSON.stringify(error));
+      console.log(error);
     } 
   }
 
